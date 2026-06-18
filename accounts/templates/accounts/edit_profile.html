@@ -1,0 +1,98 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+    body{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        min-height:100vh;
+    }
+
+    .box{
+        background:white;
+        padding:30px;
+        border-radius:10px;
+        box-shadow:0px 0px 10px gray;
+        width:350px;
+    }
+
+    h2{
+        text-align:center;
+        margin-bottom:20px;
+    }
+
+    input{
+        width:100%;
+        padding:10px;
+        margin-top:5px;
+        margin-bottom:15px;
+        box-sizing:border-box;
+    }
+
+    button{
+        width:100%;
+        padding:10px;
+        background-color:#007bff;
+        color:white;
+        border:none;
+        border-radius:5px;
+        cursor:pointer;
+    }
+
+    .back-link{
+        text-align:center;
+        margin-top:15px;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="box">
+
+    <h2>Edit Profile</h2>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label>Username</label>
+
+        <input
+            type="text"
+            name="username"
+            value="{{ user.username }}"
+            required
+        >
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            name="email"
+            value="{{ user.email }}"
+            required
+        >
+
+        <button type="submit">
+            Save Changes
+        </button>
+
+    </form>
+
+    <div class="back-link">
+        <a href="{% url 'dashboard' %}">
+            Back to Dashboard
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

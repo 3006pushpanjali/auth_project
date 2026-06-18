@@ -1,0 +1,101 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}User Registration{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+    body{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        min-height:100vh;
+    }
+
+    .register-box{
+        background:white;
+        padding:30px;
+        border-radius:10px;
+        width:300px;
+        box-shadow:0px 0px 10px gray;
+    }
+
+    h1{
+        text-align:center;
+    }
+
+    input{
+        width:100%;
+        padding:10px;
+        margin-top:5px;
+        margin-bottom:15px;
+        box-sizing:border-box;
+    }
+
+    button{
+        width:100%;
+        padding:10px;
+        background-color:#007bff;
+        color:white;
+        border:none;
+        border-radius:5px;
+        cursor:pointer;
+    }
+
+    .link-text{
+        text-align:center;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="register-box">
+
+    <h1>User Registration</h1>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <label>Username</label>
+
+        <input
+            type="text"
+            name="username"
+            required
+        >
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            name="email"
+            required
+        >
+
+        <label>Password</label>
+
+        <input
+            type="password"
+            name="password"
+            required
+        >
+
+        <button type="submit">
+            Register
+        </button>
+
+    </form>
+
+    <p class="link-text">
+        Already have an account?
+        <a href="{% url 'login' %}">Login</a>
+    </p>
+
+</div>
+
+{% endblock %}

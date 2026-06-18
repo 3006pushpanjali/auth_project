@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Authentication System{% endblock %}</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background-color:#f4f4f4;
+            padding:30px;
+            margin:0;
+        }
+
+        .container{
+            max-width:1000px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0px 0px 10px gray;
+        }
+
+        .message{
+            padding:10px;
+            margin-bottom:15px;
+            border-radius:5px;
+            text-align:center;
+        }
+
+        .message.success{
+            background-color:#d4edda;
+            color:#155724;
+        }
+
+        .message.error{
+            background-color:#f8d7da;
+            color:#721c24;
+        }
+
+        .message.warning{
+            background-color:#fff3cd;
+            color:#856404;
+        }
+
+    </style>
+
+    {% block extra_css %}{% endblock %}
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+</body>
+</html>

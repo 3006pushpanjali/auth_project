@@ -1,0 +1,198 @@
+{% extends "accounts/base.html" %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+    h1{
+        text-align:center;
+        margin-bottom:10px;
+    }
+
+    h3{
+        margin-top:30px;
+    }
+
+    .search-form{
+        margin:20px 0;
+        display:flex;
+        gap:10px;
+    }
+
+    .search-form input{
+        flex:1;
+        padding:10px;
+        border:1px solid #ddd;
+        border-radius:5px;
+    }
+
+    .search-form button{
+        padding:10px 15px;
+        border:none;
+        border-radius:5px;
+        background-color:#007bff;
+        color:white;
+        cursor:pointer;
+    }
+
+    table{
+        width:100%;
+        border-collapse:collapse;
+        margin-top:20px;
+    }
+
+    th, td{
+        border:1px solid #ddd;
+        padding:12px;
+        text-align:center;
+    }
+
+    th{
+        background-color:#007bff;
+        color:white;
+    }
+
+    tr:nth-child(even){
+        background-color:#f9f9f9;
+    }
+
+    .delete-btn{
+        text-decoration:none;
+        color:white;
+        background-color:#dc3545;
+        padding:8px 12px;
+        border-radius:5px;
+    }
+
+    .back-btn{
+        display:inline-block;
+        margin-top:20px;
+        text-decoration:none;
+        color:white;
+        background-color:#6c757d;
+        padding:10px 15px;
+        border-radius:5px;
+    }
+
+    .pagination{
+        margin-top:20px;
+        text-align:center;
+    }
+
+    .pagination a{
+        text-decoration:none;
+        margin:0 10px;
+        color:#007bff;
+    }
+
+    .no-users{
+        text-align:center;
+        padding:20px;
+    }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<h1>Admin Panel</h1>
+
+<h3>Registered Users</h3>
+
+<form method="GET" class="search-form">
+
+    <input
+        type="text"
+        name="q"
+        placeholder="Search users..."
+        value="{{ search_query }}"
+    >
+
+    <button type="submit">Search</button>
+
+</form>
+
+<table>
+
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Action</th>
+    </tr>
+
+    {% for user in page_obj %}
+
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+
+        <td>
+
+            {% if not user.is_superuser %}
+
+                <a
+                    href="{% url 'delete_user' user.id %}"
+                    class="delete-btn"
+                    onclick="return confirm('Are you sure you want to delete this user?');"
+                >
+                    Delete
+                </a>
+
+            {% else %}
+
+                Admin
+
+            {% endif %}
+
+        </td>
+
+    </tr>
+
+    {% empty %}
+
+    <tr>
+        <td colspan="4" class="no-users">
+            No users found.
+        </td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+<div class="pagination">
+
+    {% if page_obj.has_previous %}
+        <a href="?page=1&q={{ search_query }}">First</a>
+
+        <a href="?page={{ page_obj.previous_page_number }}&q={{ search_query }}">
+            Previous
+        </a>
+    {% endif %}
+
+    <span>
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}&q={{ search_query }}">
+            Next
+        </a>
+
+        <a href="?page={{ page_obj.paginator.num_pages }}&q={{ search_query }}">
+            Last
+        </a>
+    {% endif %}
+
+</div>
+
+<a href="{% url 'dashboard' %}" class="back-btn">
+    Back to Dashboard
+</a>
+
+{% endblock %}
