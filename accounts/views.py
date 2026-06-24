@@ -65,16 +65,15 @@ def register(request):
             )
         )
 
-        send_mail(
-            subject="Verify Your Email",
-            message=(
-                f"Click this link to verify your email:\n\n"
-                f"{verification_link}"
-            ),
-            from_email=None,
-            recipient_list=[email],
-            fail_silently=False,
-        )
+        #send_mail(
+         #   subject="Verify Your Email",
+          #     f"Click this link to verify your email:\n\n"
+           #     f"{verification_link}"
+            #),
+            #from_email=None,
+            #recipient_list=[email],
+            #fail_silently=False,
+        #)
 
         messages.success(
             request,
