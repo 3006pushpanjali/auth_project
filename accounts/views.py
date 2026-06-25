@@ -65,25 +65,28 @@ def register(request):
             )
         )
 
-        send_mail(
-            subject="Verify Your Email",
-            message=(
-                f"Click this link to verify your email:\n\n"
-                f"{verification_link}"
-            ),
-            from_email=None,
-            recipient_list=[email],
-            fail_silently=False,
-        )
+        try:
+            send_mail(
+                subject="Verify Your Email",
+                message=(
+                    f"Click this link to verify your email:\n\n"
+                    f"{verification_link}"
+                ),
+                from_email=None,
+                recipient_list=[email],
+                fail_silently=False,
+            )
+
+        except Exception as e:
+            print("EMAIL ERROR:", str(e))
+            raise
+
         messages.success(
             request,
             "Registration successful. Please check your email to verify your account."
         )
 
         return redirect("login")
-
-    return render(request, "accounts/register.html")
-
 
 def login_view(request):
 
