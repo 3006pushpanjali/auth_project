@@ -87,6 +87,7 @@ def register(request):
         )
 
         return redirect("login")
+    return render(request, "accounts/register.html")
 
 def login_view(request):
 
